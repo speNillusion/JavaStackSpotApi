@@ -98,11 +98,6 @@ src/
 mvn clean install
 mvn exec:java -Dexec.mainClass="org.stackspotapi.Main"
 ```
-Or
-
-```bash
-java Main.java
-```
 
 2. Use the interactive menu to:
    - Send questions to the AI

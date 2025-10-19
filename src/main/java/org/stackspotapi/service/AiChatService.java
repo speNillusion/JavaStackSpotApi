@@ -118,7 +118,7 @@ public class AiChatService {
             String finalAnswer = answerBuilder.toString().strip();
             if (finalAnswer.length() < 10) {
                 System.err.println("Resposta da IA muito curta ou vazia.");
-                return null;
+                return finalAnswer;
             }
 
             System.out.println("Resposta da IA recebida com sucesso.");

@@ -1,0 +1,72 @@
+.env
+# Arquivos compilados do Java
+*.class
+
+# Arquivos de log
+*.log
+
+# Arquivos de pacotes
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Pasta de saída do Maven
+target/
+
+# Pasta de saída do Gradle
+build/
+.gradle/
+
+# Metadados de projetos de IDEs
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/
+private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Arquivos do sistema operacional
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos temporários e de swap do editor Vim
+*~
+*.swp
+*.swo
+
+# Arquivos de configuração local (ex: variáveis de ambiente)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Relatórios de testes e cobertura
+/hs_err_pid*
+/replay_pid*
+/reports/
+/coverage/

@@ -105,7 +105,7 @@ public class EnsureTokenService {
 
         // --- PASSO 1: AUTENTICAR ---
         System.out.println("--- Passo 1: Obtendo token de autenticação ---");
-        tokenState = EnsureTokenService.ensureValidToken(null);
+        tokenState = EnsureTokenService.ensureValidToken(tokenState);
         if (tokenState == null) {
             System.err.println("Não foi possível obter o token. Encerrando teste.");
             return;

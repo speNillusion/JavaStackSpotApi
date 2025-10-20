@@ -21,151 +21,199 @@ A robust Java client implementation for interacting with the StackSpot AI API, p
 1. Create a `.env` file in the project root based on the provided `.env.example`:
 
 ```env
-STACKSPOT_REALM=your_realm
-STACKSPOT_CLIENT_ID=your_client_id
-STACKSPOT_CLIENT_SECRET=your_client_secret
-AGENT_ID=your_agent_id
+# StackSpot API Integration — Cliente Java
+
+Um cliente Java enxuto para integração com a API StackSpot AI. Este projeto oferece uma camada de abstração para autenticação baseada em token, conversas com o agente de IA (chat) e gerenciamento de execuções.
+
+## Visão geral
+
+- Linguagem: Java 17+
+- Build: Maven
+- Framework web: Spring Boot (controllers REST)
+
+O objetivo é fornecer um exemplo reutilizável de como autenticar e consumir os endpoints da StackSpot AI em aplicações Java, com foco em:
+- Gerenciamento seguro de tokens (renovação automática)
+- Interações com agente de chat (request/response)
+- Criação e acompanhamento de execuções
+
+## Conteúdo do repositório
+
+Principais pacotes:
+
+- `org.stackspotapi.controller` — endpoints REST expostos pela aplicação (ex.: `ChatController`).
+- `org.stackspotapi.service` — serviços que encapsulam lógica de autenticação, chat e execução.
+- `org.stackspotapi.dto` — objetos de transferência de dados (requests/responses).
+
+Estrutura (resumida):
 ```
 
-## 🛠️ Project Structure
+src/main/java/org/stackspotapi/
+├── StackSpotApiApplication.java # Ponto de entrada da aplicação
+├── controller/
+│ └── ChatController.java # Endpoint: /api/v1/chat
+├── service/
+│ ├── AiChatService.java
+│ ├── EnsureTokenService.java
+│ └── ExecutionService.java
+└── dto/ # DTOs usados nas requests e responses
 
 ```
-src/
-├── main/
-│   └── java/
-│       └── org/
-│           └── stackspotapi/
-│               ├── Main.java                      # Application entry point
-│               ├── dto/                           # Data Transfer Objects
-│               │   ├── ChatRequestDto.java        # Chat request structure
-│               │   ├── CreateExecutionRequestDto.java
-│               │   ├── CreateExecutionResponseDto.java
-│               │   ├── EnsureDto.java            # Token management
-│               │   └── GetConversationResponseDto.java
-│               └── service/
-│                   ├── AiChatService.java        # AI chat operations
-│                   ├── EnsureTokenService.java   # Token management
-│                   └── ExecutionService.java      # Execution handling
+
+## Pré-requisitos
+
+- JDK 17 ou superior
+- Maven 3.6+
+- Credenciais da StackSpot (Realm, Client ID, Client Secret e Agent ID)
+
+## Variáveis de ambiente / Configuração
+
+Crie um arquivo `.env` na raiz do projeto (ou configure variáveis de ambiente no seu ambiente de execução) com os seguintes valores:
+
 ```
 
-## 🔧 Services
+STACKSPOT_REALM=seu_realm
+STACKSPOT_CLIENT_ID=seu_client_id
+STACKSPOT_CLIENT_SECRET=seu_client_secret
+AGENT_ID=seu_agent_id
 
-### 1. AiChatService
+````
 
-- Manages AI chat interactions
-- Handles streaming responses
-- Coordinates the complete flow from authentication to response
+Observação: o projeto já faz referência ao uso de uma biblioteca para carregar variáveis de ambiente. Garanta que as credenciais não sejam comitadas no repositório.
 
-### 2. EnsureTokenService
+## Como compilar e executar
 
-- Handles authentication token management
-- Automatic token renewal
-- Secure credential handling
+# StackSpot API Integration — Cliente Java
 
-### 3. ExecutionService
+Um cliente Java enxuto para integração com a API StackSpot AI. Este projeto oferece uma camada de abstração para autenticação baseada em token, conversas com o agente de IA (chat) e gerenciamento de execuções.
 
-- Creates and manages AI executions
-- Handles conversation ID retrieval
-- Manages execution state and callbacks
+## Visão geral
 
-## 📝 DTOs (Data Transfer Objects)
+- Linguagem: Java 17+
+- Build: Maven
+- Framework web: Spring Boot (controllers REST)
 
-### ChatRequestDto
+O objetivo é fornecer um exemplo reutilizável de como autenticar e consumir os endpoints da StackSpot AI em aplicações Java, com foco em:
+- Gerenciamento seguro de tokens (renovação automática)
+- Interações com agente de chat (request/response)
+- Criação e acompanhamento de execuções
 
-- Structures chat requests with context
-- Manages conversation metadata
+## Conteúdo do repositório
 
-### CreateExecutionRequestDto/ResponseDto
+Principais pacotes:
 
-- Handles execution creation requests
-- Manages execution responses and IDs
+- `org.stackspotapi.controller` — endpoints REST expostos pela aplicação (ex.: `ChatController`).
+- `org.stackspotapi.service` — serviços que encapsulam lógica de autenticação, chat e execução.
+- `org.stackspotapi.dto` — objetos de transferência de dados (requests/responses).
 
-### EnsureDto
+Estrutura (resumida):
+```
+src/main/java/org/stackspotapi/
+├── StackSpotApiApplication.java    # Ponto de entrada da aplicação
+├── controller/
+│   └── ChatController.java        # Endpoint: /api/v1/chat
+├── service/
+│   ├── AiChatService.java
+│   ├── EnsureTokenService.java
+│   └── ExecutionService.java
+└── dto/                           # DTOs usados nas requests e responses
+```
 
-- Manages authentication tokens
-- Handles token expiration
+## Pré-requisitos
 
-### GetConversationResponseDto
+- JDK 17 ou superior
+- Maven 3.6+
+- Credenciais da StackSpot (Realm, Client ID, Client Secret e Agent ID)
 
-- Structures conversation responses
-- Manages conversation state
+## Variáveis de ambiente / Configuração
 
-## 🚀 Usage
+Crie um arquivo `.env` na raiz do projeto (ou configure variáveis de ambiente no seu ambiente de execução) com os seguintes valores:
 
-1. Run the application:
+```
+STACKSPOT_REALM=seu_realm
+STACKSPOT_CLIENT_ID=seu_client_id
+STACKSPOT_CLIENT_SECRET=seu_client_secret
+AGENT_ID=seu_agent_id
+```
+
+Observação: o projeto já faz referência ao uso de uma biblioteca para carregar variáveis de ambiente. Garanta que as credenciais não sejam comitadas no repositório.
+
+## Como compilar e executar
+
+1. Compilar:
 
 ```bash
-mvn clean install
-mvn exec:java -Dexec.mainClass="org.stackspotapi.Main"
+mvn clean package
 ```
 
-2. Use the interactive menu to:
-   - Send questions to the AI
-   - Get AI-powered responses
-   - Exit the application
+2. Executar (modo local):
 
-Example interaction:
-
-```java
-String response = AiChatService.ask("Your question here");
+```bash
+java -jar target/*.jar
 ```
 
-## 🔒 Security
+A aplicação inicia um servidor web (Spring Boot). Por padrão, o arquivo `ChatController` expõe um endpoint HTTP:
 
-- Environment variables for sensitive credentials
-- Token-based authentication
-- Automatic token renewal
-- Secure HTTP client implementation
+- POST /api/v1/chat
 
-## 🛡️ Dependencies
+## Endpoints (resumo)
 
-```xml
-<dependencies>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.20.0</version>
-    </dependency>
-    <dependency>
-        <groupId>io.github.cdimascio</groupId>
-        <artifactId>dotenv-java</artifactId>
-        <version>3.2.0</version>
-    </dependency>
-</dependencies>
+### POST /api/v1/chat
+Envia um prompt para o serviço de chat e retorna a resposta gerada pela IA.
+
+Request (JSON):
+
+```json
+{
+  "prompt": "Pergunte algo ao agente",
+  "conversationId": "opcional-id-da-conversa"
+}
 ```
 
-## 🔍 Error Handling
+Response:
+- 200 OK — corpo com a resposta gerada pelo agente (texto)
+- 400 Bad Request — prompt ausente ou inválido
+- 500 Internal Server Error — falha de comunicação ou erro interno
 
-The application implements comprehensive error handling:
+Exemplo CURL:
 
-- Network communication errors
-- Authentication failures
-- API response validation
-- Token expiration handling
-- Invalid input validation
+```bash
+curl -X POST http://localhost:8080/api/v1/chat \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"Qual é a capital da França?"}'
+```
 
-## 🤝 Contributing
+## Observações de implementação
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+- `ChatController` valida se o prompt está presente e delega a chamada ao `AiChatService`.
+- `AiChatService` é responsável por obter/renovar tokens (via `EnsureTokenService`) e enviar requisições para a API StackSpot.
+- `ExecutionService` gerencia execuções e conversas (criação/consulta de execuções e identificação de conversationId).
 
-## 📄 License
+## Testes
 
-This project is currently unlicensed. Please contact the repository owner for usage permissions.
+O repositório não possui testes automatizados incluídos por padrão. Recomenda-se adicionar ao menos:
 
-## ✨ Best Practices Implemented
+- Testes unitários para serviços (Mockito + JUnit 5)
+- Testes de integração para os controllers (Spring Boot Test)
 
-- Clean Code architecture
-- Dependency Injection ready
-- Proper error handling
-- Comprehensive logging
-- Security best practices
-- HTTP client pooling
-- Stream processing for large responses
+## Como contribuir
 
-## 📞 Contact
+1. Faça um fork do projeto
+2. Crie uma branch com uma descrição curta (`feature/`, `fix/`)
+3. Faça alterações e escreva testes quando aplicável
+4. Abra um Pull Request descrevendo a mudança
 
-Create an issue in the repository for bugs, features, or questions.
+## Segurança e boas práticas
+
+- Nunca comite credenciais. Use `.gitignore` para `.env`.
+- Habilite logs para depuração, mas evite imprimir segredos.
+- Considere adicionar limites de taxa e tratamento de timeouts ao cliente HTTP.
+
+## Próximos passos sugeridos (opcionais)
+
+- Adicionar exemplos de uso do `AiChatService` em um pequeno cliente CLI ou testes de integração.
+- Incluir GitHub Actions para build/test/scan de segurança.
+- Documentar contrato JSON com OpenAPI/Swagger.
+
+## Contato
+
+Abra uma issue no repositório para dúvidas, bugs ou sugestões.

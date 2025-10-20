@@ -4,6 +4,7 @@ package org.stackspotapi.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.stackspotapi.dto.CreateExecutionRequestDto;
 import org.stackspotapi.dto.CreateExecutionResponseDto;
 import org.stackspotapi.dto.EnsureDto;
@@ -16,8 +17,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ExecutionService {
-
-    private static final String API_URL = "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/predict";
+    private static final Dotenv dotenv = Dotenv.load( );
+    private static final String QUICK_COMMAND_NAME = dotenv.get("QUICK_COMMAND_NAME");
+    private static final String API_URL = "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/" + QUICK_COMMAND_NAME;
     private static final HttpClient httpClient = HttpClient.newHttpClient( );
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

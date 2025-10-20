@@ -20,7 +20,7 @@ A robust Java client implementation for interacting with the StackSpot AI API, p
 
 1. Create a `.env` file in the project root based on the provided `.env.example`:
 
-```env
+
 # StackSpot API Integration — Cliente Java
 
 Um cliente Java enxuto para integração com a API StackSpot AI. Este projeto oferece uma camada de abstração para autenticação baseada em token, conversas com o agente de IA (chat) e gerenciamento de execuções.
@@ -217,3 +217,4 @@ O repositório não possui testes automatizados incluídos por padrão. Recomend
 ## Contato
 
 Abra uma issue no repositório para dúvidas, bugs ou sugestões.
+````

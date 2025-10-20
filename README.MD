@@ -217,4 +217,3 @@ O repositório não possui testes automatizados incluídos por padrão. Recomend
 ## Contato
 
 Abra uma issue no repositório para dúvidas, bugs ou sugestões.
-````

@@ -17,10 +17,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ExecutionService {
-    private static final Dotenv dotenv = Dotenv.load( );
+    private static final Dotenv dotenv = Dotenv.load();
     private static final String QUICK_COMMAND_NAME = dotenv.get("QUICK_COMMAND_NAME");
     private static final String API_URL = "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/" + QUICK_COMMAND_NAME;
-    private static final HttpClient httpClient = HttpClient.newHttpClient( );
+    private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -46,14 +46,14 @@ public class ExecutionService {
             // Monta a URL do endpoint de callback
             String url = "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/" + executionId;
 
-            HttpRequest request = HttpRequest.newBuilder( )
+            HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .header("execution_id", executionId)
                     .header("Authorization", "Bearer " + tokenDto.getJwt())
                     .GET()
                     .build();
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString( ));
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
                 // Parseia a resposta JSON para extrair apenas o campo 'conversation_id'
@@ -121,7 +121,7 @@ public class ExecutionService {
 
             // 4. Constrói e envia a requisição POST
             HttpRequest request = requestBuilder.POST(HttpRequest.BodyPublishers.ofString(payloadJson)).build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString( ));
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             // 5. Processa a resposta
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
@@ -138,37 +138,6 @@ public class ExecutionService {
             System.err.println("Erro de comunicação ao criar execução: " + e.getMessage());
             return null;
         }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        // Gerenciamento do estado do token
-        EnsureDto tokenState = null;
-
-        // --- PASSO 1: AUTENTICAR ---
-        tokenState = EnsureTokenService.ensureValidToken(tokenState);
-        if (tokenState == null) {
-            System.err.println("Não foi possível obter o token. Encerrando teste.");
-            return;
-        }
-        System.out.println("Token obtido com sucesso.");
-
-        // --- PASSO 2: CRIAR EXECUÇÃO ---
-        System.out.println("\n--- Passo 2: Criando uma execução ---");
-        CreateExecutionRequestDto executionRequest = new CreateExecutionRequestDto(
-                "query.java",
-                "Crie uma classe Java para representar um Produto com id, nome e preço."
-        );
-        CreateExecutionResponseDto executionResponse = createExecution(executionRequest, tokenState);
-        if (executionResponse == null) {
-            System.err.println("Falha ao criar a execução. Encerrando teste.");
-            return;
-        }
-        String executionId = executionResponse.getExecutionId();
-        System.out.println("Execução criada. ID: " + executionId);
-
-        String conversationResponse = getConversationId(executionId, tokenState);
-
-        System.out.println(conversationResponse);
     }
 
 }

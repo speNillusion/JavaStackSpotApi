@@ -13,6 +13,12 @@ O objetivo é fornecer um exemplo reutilizável de como autenticar e consumir os
 - Interações com agente de chat (request/response)
 - Criação e acompanhamento de execuções
 
+## Executar o código
+
+```
+mvn spring-boot:run
+```
+
 ## Pré-requisitos
 
 - JDK 17 ou superior

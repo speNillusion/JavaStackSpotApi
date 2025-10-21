@@ -1,4 +1,3 @@
-// No arquivo EnsureTokenService.java
 package org.stackspotapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -40,7 +39,7 @@ public class EnsureTokenService {
      * @param currentTokenDto O DTO contendo o token atual. Pode ser nulo.
      * @return Um DTO com um token válido e atualizado. Retorna nulo se a autenticação falhar.
      */
-    public static EnsureDto ensureValidToken(EnsureDto currentTokenDto) {
+    public static EnsureDto ensureValidToken(EnsureDto currentTokenDto) { // CORREÇÃO 1: O parâmetro agora é do tipo EnsureDto
         // 1. Verifica se as credenciais essenciais estão configuradas
         if (REALM == null || REALM.isBlank() || CLIENT_ID == null || CLIENT_ID.isBlank() || CLIENT_SECRET == null || CLIENT_SECRET.isBlank()) {
             System.err.println("Credenciais da StackSpot (REALM, CLIENT_ID, CLIENT_SECRET) não configuradas no .env!");
@@ -48,6 +47,7 @@ public class EnsureTokenService {
         }
 
         // 2. Verifica se o token no DTO atual ainda é válido
+        // CORREÇÃO 2: Usa o objeto 'currentTokenDto' para a verificação e remove o 'f' antes do if.
         if (currentTokenDto != null && currentTokenDto.getJwt() != null && !currentTokenDto.getJwt().isBlank() && currentTokenDto.getTokenExpiry() != null) {
             Instant safeExpiryTime = currentTokenDto.getTokenExpiry().minus(5, ChronoUnit.MINUTES);
             if (Instant.now().isBefore(safeExpiryTime)) {
@@ -95,6 +95,7 @@ public class EnsureTokenService {
 
         } catch (IOException | InterruptedException e) {
             System.err.println("Erro de comunicação ou interrupção ao obter token JWT: " + e.getMessage());
+            Thread.currentThread().interrupt(); // Boa prática ao capturar InterruptedException
             return null; // Falha na autenticação
         }
     }
@@ -105,6 +106,7 @@ public class EnsureTokenService {
 
         // --- PASSO 1: AUTENTICAR ---
         System.out.println("--- Passo 1: Obtendo token de autenticação ---");
+        // CORREÇÃO 3: Passa o objeto 'tokenState' diretamente.
         tokenState = EnsureTokenService.ensureValidToken(tokenState);
         if (tokenState == null) {
             System.err.println("Não foi possível obter o token. Encerrando teste.");
@@ -140,5 +142,4 @@ public class EnsureTokenService {
             System.err.println("FALHA ao obter o ID da conversação.");
         }
     }
-
 }
